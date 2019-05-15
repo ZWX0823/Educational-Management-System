@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.mapper.SpecialtyYearCourseMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.po.SpecialtyYearCourse" >
+    <id column="Specialty_YearID" property="specialty_YearID" jdbcType="CHAR" />
+    <id column="CourseID" property="courseID" jdbcType="CHAR" />
+    <result column="Time" property="time" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Specialty_YearID, CourseID, Time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.springmvc.po.SpecialtyYearCourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from specialty_year_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.springmvc.po.SpecialtyYearCourseKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from specialty_year_course
+    where Specialty_YearID = #{specialty_YearID,jdbcType=CHAR}
+      and CourseID = #{courseID,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.springmvc.po.SpecialtyYearCourseKey" >
+    delete from specialty_year_course
+    where Specialty_YearID = #{specialty_YearID,jdbcType=CHAR}
+      and CourseID = #{courseID,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.springmvc.po.SpecialtyYearCourseExample" >
+    delete from specialty_year_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.po.SpecialtyYearCourse" >
+    insert into specialty_year_course (Specialty_YearID, CourseID, Time
+      )
+    values (#{specialty_YearID,jdbcType=CHAR}, #{courseID,jdbcType=CHAR}, #{time,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.po.SpecialtyYearCourse" >
+    insert into specialty_year_course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="specialty_YearID != null" >
+        Specialty_YearID,
+      </if>
+      <if test="courseID != null" >
+        CourseID,
+      </if>
+      <if test="time != null" >
+        Time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="specialty_YearID != null" >
+        #{specialty_YearID,jdbcType=CHAR},
+      </if>
+      <if test="courseID != null" >
+        #{courseID,jdbcType=CHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.springmvc.po.SpecialtyYearCourseExample" resultType="java.lang.Integer" >
+    select count(*) from specialty_year_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update specialty_year_course
+    <set >
+      <if test="record.specialty_YearID != null" >
+        Specialty_YearID = #{record.specialty_YearID,jdbcType=CHAR},
+      </if>
+      <if test="record.courseID != null" >
+        CourseID = #{record.courseID,jdbcType=CHAR},
+      </if>
+      <if test="record.time != null" >
+        Time = #{record.time,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update specialty_year_course
+    set Specialty_YearID = #{record.specialty_YearID,jdbcType=CHAR},
+      CourseID = #{record.courseID,jdbcType=CHAR},
+      Time = #{record.time,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.po.SpecialtyYearCourse" >
+    update specialty_year_course
+    <set >
+      <if test="time != null" >
+        Time = #{time,jdbcType=CHAR},
+      </if>
+    </set>
+    where Specialty_YearID = #{specialty_YearID,jdbcType=CHAR}
+      and CourseID = #{courseID,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.po.SpecialtyYearCourse" >
+    update specialty_year_course
+    set Time = #{time,jdbcType=CHAR}
+    where Specialty_YearID = #{specialty_YearID,jdbcType=CHAR}
+      and CourseID = #{courseID,jdbcType=CHAR}
+  </update>
+  <select id="getCourseIDListByExample" resultType="java.lang.String" parameterType="com.springmvc.po.SpecialtyYearCourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    CourseID
+    from specialty_year_course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

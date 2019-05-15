@@ -1,0 +1,29 @@
+.body{
+    height: 100%;
+    width: 100%;
+}
+
+.mybackgroundcolor{
+    filter: alpha(Opacity=80);
+    -moz-opacity: 50%;
+    opacity: 50%;
+}
+
+.my-container {
+    float: left;
+    display: inline-block;
+    margin-right:30px;
+}
+
+.myLabel-content ,.myText-content,.myBtn-content{
+    float: left;
+    display: inline-block;
+    margin-left: 10px;
+}
+.myLabel-content,.myText-content input[type='text'],.myBtn-content .btn {
+    height: 30px;
+    font-size: 12px;
+}
+.myBtn-content .btn {
+    margin-bottom: 10px;
+}

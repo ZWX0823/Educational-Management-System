@@ -1,0 +1,47 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+    <!-- 事务管理器
+        对mybatis操作数据库事务控制，spring使用jdbc的事务控制
+        -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 数据源dataSource在applicationContext-dao.xml中配置了-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!-- 通知 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- 传播行为 -->
+            <tx:method name="save*" propagation="REQUIRED"></tx:method>
+            <tx:method name="add*" propagation="REQUIRED"></tx:method>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="select*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- aop调用通知 -->
+    <aop:config>
+        <!--pointcut元素定义一个切入点，execution中的第一个星号 用以匹配方法的返回类型，
+            这里星号表明匹配所有返回类型。 com.abc.dao.*.*(..)表明匹配com.springmvc.service包下的所有类的所有
+            方法-->
+        <aop:pointcut id="myPointcut" expression="execution(* com.springmvc.service.impl.*.*(..))"></aop:pointcut>
+        <!--将定义好的事务处理策略应用到上述的切入点-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"></aop:advisor>
+    </aop:config>
+
+</beans>

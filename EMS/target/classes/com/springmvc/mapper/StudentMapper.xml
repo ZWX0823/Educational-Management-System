@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.po.Student" >
+    <id column="StudentID" property="studentID" jdbcType="CHAR" />
+    <result column="StudentName" property="studentName" jdbcType="VARCHAR" />
+    <result column="Sex" property="sex" jdbcType="CHAR" />
+    <result column="Birthday" property="birthday" jdbcType="DATE" />
+    <result column="ClassID" property="classID" jdbcType="CHAR" />
+    <result column="Phone" property="phone" jdbcType="CHAR" />
+    <result column="AccountNumber" property="accountNumber" jdbcType="VARCHAR" />
+    <result column="Specialty" property="specialty" jdbcType="CHAR" />
+    <result column="Dept" property="dept" jdbcType="CHAR" />
+    <result column="EntranceYear" property="entranceYear" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    StudentID, StudentName, Sex, Birthday, ClassID, Phone, AccountNumber, Specialty, 
+    Dept, EntranceYear
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.springmvc.po.StudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where StudentID = #{studentID,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from student
+    where StudentID = #{studentID,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.springmvc.po.StudentExample" >
+    delete from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.po.Student" >
+    insert into student (StudentID, StudentName, Sex, 
+      Birthday, ClassID, Phone, AccountNumber, 
+      Specialty, Dept, EntranceYear
+      )
+    values (#{studentID,jdbcType=CHAR}, #{studentName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, 
+      #{birthday,jdbcType=DATE}, #{classID,jdbcType=CHAR}, #{phone,jdbcType=CHAR}, #{accountNumber,jdbcType=VARCHAR}, 
+      #{specialty,jdbcType=CHAR}, #{dept,jdbcType=CHAR}, #{entranceYear,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.po.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentID != null" >
+        StudentID,
+      </if>
+      <if test="studentName != null" >
+        StudentName,
+      </if>
+      <if test="sex != null" >
+        Sex,
+      </if>
+      <if test="birthday != null" >
+        Birthday,
+      </if>
+      <if test="classID != null" >
+        ClassID,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="accountNumber != null" >
+        AccountNumber,
+      </if>
+      <if test="specialty != null" >
+        Specialty,
+      </if>
+      <if test="dept != null" >
+        Dept,
+      </if>
+      <if test="entranceYear != null" >
+        EntranceYear,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentID != null" >
+        #{studentID,jdbcType=CHAR},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="classID != null" >
+        #{classID,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="accountNumber != null" >
+        #{accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="dept != null" >
+        #{dept,jdbcType=CHAR},
+      </if>
+      <if test="entranceYear != null" >
+        #{entranceYear,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.springmvc.po.StudentExample" resultType="java.lang.Integer" >
+    select count(*) from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update student
+    <set >
+      <if test="record.studentID != null" >
+        StudentID = #{record.studentID,jdbcType=CHAR},
+      </if>
+      <if test="record.studentName != null" >
+        StudentName = #{record.studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        Sex = #{record.sex,jdbcType=CHAR},
+      </if>
+      <if test="record.birthday != null" >
+        Birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.classID != null" >
+        ClassID = #{record.classID,jdbcType=CHAR},
+      </if>
+      <if test="record.phone != null" >
+        Phone = #{record.phone,jdbcType=CHAR},
+      </if>
+      <if test="record.accountNumber != null" >
+        AccountNumber = #{record.accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialty != null" >
+        Specialty = #{record.specialty,jdbcType=CHAR},
+      </if>
+      <if test="record.dept != null" >
+        Dept = #{record.dept,jdbcType=CHAR},
+      </if>
+      <if test="record.entranceYear != null" >
+        EntranceYear = #{record.entranceYear,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update student
+    set StudentID = #{record.studentID,jdbcType=CHAR},
+      StudentName = #{record.studentName,jdbcType=VARCHAR},
+      Sex = #{record.sex,jdbcType=CHAR},
+      Birthday = #{record.birthday,jdbcType=DATE},
+      ClassID = #{record.classID,jdbcType=CHAR},
+      Phone = #{record.phone,jdbcType=CHAR},
+      AccountNumber = #{record.accountNumber,jdbcType=VARCHAR},
+      Specialty = #{record.specialty,jdbcType=CHAR},
+      Dept = #{record.dept,jdbcType=CHAR},
+      EntranceYear = #{record.entranceYear,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.po.Student" >
+    update student
+    <set >
+      <if test="studentName != null" >
+        StudentName = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        Sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        Birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="classID != null" >
+        ClassID = #{classID,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="accountNumber != null" >
+        AccountNumber = #{accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        Specialty = #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="dept != null" >
+        Dept = #{dept,jdbcType=CHAR},
+      </if>
+      <if test="entranceYear != null" >
+        EntranceYear = #{entranceYear,jdbcType=CHAR},
+      </if>
+    </set>
+    where StudentID = #{studentID,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.po.Student" >
+    update student
+    set StudentName = #{studentName,jdbcType=VARCHAR},
+      Sex = #{sex,jdbcType=CHAR},
+      Birthday = #{birthday,jdbcType=DATE},
+      ClassID = #{classID,jdbcType=CHAR},
+      Phone = #{phone,jdbcType=CHAR},
+      AccountNumber = #{accountNumber,jdbcType=VARCHAR},
+      Specialty = #{specialty,jdbcType=CHAR},
+      Dept = #{dept,jdbcType=CHAR},
+      EntranceYear = #{entranceYear,jdbcType=CHAR}
+    where StudentID = #{studentID,jdbcType=CHAR}
+  </update>
+  <select id="selectByAccountNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from student
+    where AccountNumber = #{accountNumber,jdbcType=VARCHAR}
+  </select>
+</mapper>

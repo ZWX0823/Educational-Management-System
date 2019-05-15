@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.mapper.SpecialtyYearMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.po.SpecialtyYear" >
+    <id column="Specialty_YearID" property="specialty_YearID" jdbcType="CHAR" />
+    <result column="Specialty_YearName" property="specialty_YearName" jdbcType="VARCHAR" />
+    <result column="Specialty" property="specialty" jdbcType="CHAR" />
+    <result column="Number" property="number" jdbcType="INTEGER" />
+    <result column="AdmissionDate" property="admissionDate" jdbcType="DATE" />
+    <result column="Finish" property="finish" jdbcType="CHAR" />
+    <result column="Dept" property="dept" jdbcType="CHAR" />
+    <result column="ClassNumber" property="classNumber" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Specialty_YearID, Specialty_YearName, Specialty, Number, AdmissionDate, Finish, Dept, 
+    ClassNumber
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.springmvc.po.SpecialtyYearExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from specialty_year
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from specialty_year
+    where Specialty_YearID = #{specialty_YearID,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from specialty_year
+    where Specialty_YearID = #{specialty_YearID,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.springmvc.po.SpecialtyYearExample" >
+    delete from specialty_year
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.po.SpecialtyYear" >
+    insert into specialty_year (Specialty_YearID, Specialty_YearName, 
+      Specialty, Number, AdmissionDate, 
+      Finish, Dept, ClassNumber
+      )
+    values (#{specialty_YearID,jdbcType=CHAR}, #{specialty_YearName,jdbcType=VARCHAR}, 
+      #{specialty,jdbcType=CHAR}, #{number,jdbcType=INTEGER}, #{admissionDate,jdbcType=DATE}, 
+      #{finish,jdbcType=CHAR}, #{dept,jdbcType=CHAR}, #{classNumber,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.po.SpecialtyYear" >
+    insert into specialty_year
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="specialty_YearID != null" >
+        Specialty_YearID,
+      </if>
+      <if test="specialty_YearName != null" >
+        Specialty_YearName,
+      </if>
+      <if test="specialty != null" >
+        Specialty,
+      </if>
+      <if test="number != null" >
+        Number,
+      </if>
+      <if test="admissionDate != null" >
+        AdmissionDate,
+      </if>
+      <if test="finish != null" >
+        Finish,
+      </if>
+      <if test="dept != null" >
+        Dept,
+      </if>
+      <if test="classNumber != null" >
+        ClassNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="specialty_YearID != null" >
+        #{specialty_YearID,jdbcType=CHAR},
+      </if>
+      <if test="specialty_YearName != null" >
+        #{specialty_YearName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="admissionDate != null" >
+        #{admissionDate,jdbcType=DATE},
+      </if>
+      <if test="finish != null" >
+        #{finish,jdbcType=CHAR},
+      </if>
+      <if test="dept != null" >
+        #{dept,jdbcType=CHAR},
+      </if>
+      <if test="classNumber != null" >
+        #{classNumber,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.springmvc.po.SpecialtyYearExample" resultType="java.lang.Integer" >
+    select count(*) from specialty_year
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update specialty_year
+    <set >
+      <if test="record.specialty_YearID != null" >
+        Specialty_YearID = #{record.specialty_YearID,jdbcType=CHAR},
+      </if>
+      <if test="record.specialty_YearName != null" >
+        Specialty_YearName = #{record.specialty_YearName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialty != null" >
+        Specialty = #{record.specialty,jdbcType=CHAR},
+      </if>
+      <if test="record.number != null" >
+        Number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.admissionDate != null" >
+        AdmissionDate = #{record.admissionDate,jdbcType=DATE},
+      </if>
+      <if test="record.finish != null" >
+        Finish = #{record.finish,jdbcType=CHAR},
+      </if>
+      <if test="record.dept != null" >
+        Dept = #{record.dept,jdbcType=CHAR},
+      </if>
+      <if test="record.classNumber != null" >
+        ClassNumber = #{record.classNumber,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update specialty_year
+    set Specialty_YearID = #{record.specialty_YearID,jdbcType=CHAR},
+      Specialty_YearName = #{record.specialty_YearName,jdbcType=VARCHAR},
+      Specialty = #{record.specialty,jdbcType=CHAR},
+      Number = #{record.number,jdbcType=INTEGER},
+      AdmissionDate = #{record.admissionDate,jdbcType=DATE},
+      Finish = #{record.finish,jdbcType=CHAR},
+      Dept = #{record.dept,jdbcType=CHAR},
+      ClassNumber = #{record.classNumber,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.po.SpecialtyYear" >
+    update specialty_year
+    <set >
+      <if test="specialty_YearName != null" >
+        Specialty_YearName = #{specialty_YearName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        Specialty = #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="number != null" >
+        Number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="admissionDate != null" >
+        AdmissionDate = #{admissionDate,jdbcType=DATE},
+      </if>
+      <if test="finish != null" >
+        Finish = #{finish,jdbcType=CHAR},
+      </if>
+      <if test="dept != null" >
+        Dept = #{dept,jdbcType=CHAR},
+      </if>
+      <if test="classNumber != null" >
+        ClassNumber = #{classNumber,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where Specialty_YearID = #{specialty_YearID,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.po.SpecialtyYear" >
+    update specialty_year
+    set Specialty_YearName = #{specialty_YearName,jdbcType=VARCHAR},
+      Specialty = #{specialty,jdbcType=CHAR},
+      Number = #{number,jdbcType=INTEGER},
+      AdmissionDate = #{admissionDate,jdbcType=DATE},
+      Finish = #{finish,jdbcType=CHAR},
+      Dept = #{dept,jdbcType=CHAR},
+      ClassNumber = #{classNumber,jdbcType=SMALLINT}
+    where Specialty_YearID = #{specialty_YearID,jdbcType=CHAR}
+  </update>
+  <select id="selectByDept_Paging" resultType="SpecialtyYear">
+    select specialty_year.*
+    from specialty_year
+    where specialty_year.Dept = #{deptID,jdbcType=CHAR}
+    limit #{pagingVO.toPageNo},#{pagingVO.pageSize}
+  </select>
+</mapper>

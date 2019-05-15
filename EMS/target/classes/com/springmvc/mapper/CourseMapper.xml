@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.mapper.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.po.Course" >
+    <id column="CourseID" property="courseID" jdbcType="CHAR" />
+    <result column="CourseName" property="courseName" jdbcType="VARCHAR" />
+    <result column="DeptID" property="deptID" jdbcType="CHAR" />
+    <result column="Period" property="period" jdbcType="INTEGER" />
+    <result column="Credit" property="credit" jdbcType="INTEGER" />
+    <result column="CourseType" property="courseType" jdbcType="VARCHAR" />
+    <result column="Weeks" property="weeks" jdbcType="INTEGER" />
+    <result column="Specialty" property="specialty" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CourseID, CourseName, DeptID, Period, Credit, CourseType, Weeks, Specialty
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.springmvc.po.CourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where CourseID = #{courseID,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course
+    where CourseID = #{courseID,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.springmvc.po.CourseExample" >
+    delete from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.po.Course" >
+    insert into course (CourseID, CourseName, DeptID, 
+      Period, Credit, CourseType, 
+      Weeks, Specialty)
+    values (#{courseID,jdbcType=CHAR}, #{courseName,jdbcType=VARCHAR}, #{deptID,jdbcType=CHAR}, 
+      #{period,jdbcType=INTEGER}, #{credit,jdbcType=INTEGER}, #{courseType,jdbcType=VARCHAR}, 
+      #{weeks,jdbcType=INTEGER}, #{specialty,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.po.Course" >
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="courseID != null" >
+        CourseID,
+      </if>
+      <if test="courseName != null" >
+        CourseName,
+      </if>
+      <if test="deptID != null" >
+        DeptID,
+      </if>
+      <if test="period != null" >
+        Period,
+      </if>
+      <if test="credit != null" >
+        Credit,
+      </if>
+      <if test="courseType != null" >
+        CourseType,
+      </if>
+      <if test="weeks != null" >
+        Weeks,
+      </if>
+      <if test="specialty != null" >
+        Specialty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="courseID != null" >
+        #{courseID,jdbcType=CHAR},
+      </if>
+      <if test="courseName != null" >
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptID != null" >
+        #{deptID,jdbcType=CHAR},
+      </if>
+      <if test="period != null" >
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="courseType != null" >
+        #{courseType,jdbcType=VARCHAR},
+      </if>
+      <if test="weeks != null" >
+        #{weeks,jdbcType=INTEGER},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.springmvc.po.CourseExample" resultType="java.lang.Integer" >
+    select count(*) from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update course
+    <set >
+      <if test="record.courseID != null" >
+        CourseID = #{record.courseID,jdbcType=CHAR},
+      </if>
+      <if test="record.courseName != null" >
+        CourseName = #{record.courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptID != null" >
+        DeptID = #{record.deptID,jdbcType=CHAR},
+      </if>
+      <if test="record.period != null" >
+        Period = #{record.period,jdbcType=INTEGER},
+      </if>
+      <if test="record.credit != null" >
+        Credit = #{record.credit,jdbcType=INTEGER},
+      </if>
+      <if test="record.courseType != null" >
+        CourseType = #{record.courseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weeks != null" >
+        Weeks = #{record.weeks,jdbcType=INTEGER},
+      </if>
+      <if test="record.specialty != null" >
+        Specialty = #{record.specialty,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update course
+    set CourseID = #{record.courseID,jdbcType=CHAR},
+      CourseName = #{record.courseName,jdbcType=VARCHAR},
+      DeptID = #{record.deptID,jdbcType=CHAR},
+      Period = #{record.period,jdbcType=INTEGER},
+      Credit = #{record.credit,jdbcType=INTEGER},
+      CourseType = #{record.courseType,jdbcType=VARCHAR},
+      Weeks = #{record.weeks,jdbcType=INTEGER},
+      Specialty = #{record.specialty,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.po.Course" >
+    update course
+    <set >
+      <if test="courseName != null" >
+        CourseName = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptID != null" >
+        DeptID = #{deptID,jdbcType=CHAR},
+      </if>
+      <if test="period != null" >
+        Period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null" >
+        Credit = #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="courseType != null" >
+        CourseType = #{courseType,jdbcType=VARCHAR},
+      </if>
+      <if test="weeks != null" >
+        Weeks = #{weeks,jdbcType=INTEGER},
+      </if>
+      <if test="specialty != null" >
+        Specialty = #{specialty,jdbcType=CHAR},
+      </if>
+    </set>
+    where CourseID = #{courseID,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.po.Course" >
+    update course
+    set CourseName = #{courseName,jdbcType=VARCHAR},
+      DeptID = #{deptID,jdbcType=CHAR},
+      Period = #{period,jdbcType=INTEGER},
+      Credit = #{credit,jdbcType=INTEGER},
+      CourseType = #{courseType,jdbcType=VARCHAR},
+      Weeks = #{weeks,jdbcType=INTEGER},
+      Specialty = #{specialty,jdbcType=CHAR}
+    where CourseID = #{courseID,jdbcType=CHAR}
+  </update>
+  <select id="getCourseIDListByExample" resultType="java.lang.String" parameterType="com.springmvc.po.CourseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    CourseID
+    from course
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="getCourseNameByPrimaryKey" resultType="java.lang.String" parameterType="java.lang.String" >
+    select
+    CourseName
+    from course
+    where CourseID = #{courseID,jdbcType=CHAR}
+  </select>
+</mapper>

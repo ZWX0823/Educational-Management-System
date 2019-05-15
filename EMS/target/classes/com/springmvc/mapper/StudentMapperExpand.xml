@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.mapper.StudentMapperExpand" >
+    <select id="findByPaging" parameterType="PagingVO" resultType="StudentExpand">
+        select student.*,dept.DeptName,SpecialtyName,ClassName
+        from student,dept,specialty,class
+        where student.StudentID IS NOT NULL
+        AND student.Dept = dept.DeptID
+        AND student.Specialty = specialty.SpecialtyID
+        AND student.ClassID = class.ClassID
+        limit #{toPageNo},#{pageSize}
+    </select>
+    <select id="getStudentOfDeptByPaging" resultType="StudentExpand">
+        select student.*,dept.DeptName,SpecialtyName,ClassName
+        from student,dept,specialty,class
+        where student.StudentID IS NOT NULL
+        AND student.Dept = #{deptID,jdbcType=CHAR}
+        AND student.Dept = dept.DeptID
+        AND student.Specialty = specialty.SpecialtyID
+        AND student.ClassID = class.ClassID
+        limit #{pagingVO.toPageNo},#{pagingVO.pageSize}
+    </select>
+    <select id="getStudentOfClassByPaging" resultType="StudentExpand">
+        select student.*,dept.DeptName,SpecialtyName,ClassName
+        from student,dept,specialty,class
+        where student.StudentID IS NOT NULL
+        AND student.ClassID = #{classID,jdbcType=CHAR}
+        AND student.Dept = dept.DeptID
+        AND student.Specialty = specialty.SpecialtyID
+        AND student.ClassID = class.ClassID
+        limit #{pagingVO.toPageNo},#{pagingVO.pageSize}
+    </select>
+    <select id="getStudentExpandById" parameterType="java.lang.String" resultType="studentExpand">
+        select student.*,dept.DeptName,SpecialtyName,ClassName
+        from student,dept,specialty,class
+        where student.StudentID = #{studentID,jdbcType=CHAR}
+        AND student.Dept = dept.DeptID
+        AND student.Specialty = specialty.SpecialtyID
+        AND student.ClassID = class.ClassID
+    </select>
+</mapper>

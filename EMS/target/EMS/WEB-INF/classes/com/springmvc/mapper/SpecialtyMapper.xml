@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.mapper.SpecialtyMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.po.Specialty" >
+    <id column="SpecialtyID" property="specialtyID" jdbcType="CHAR" />
+    <result column="Dept" property="dept" jdbcType="CHAR" />
+    <result column="SpecialtyName" property="specialtyName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SpecialtyID, Dept, SpecialtyName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.springmvc.po.SpecialtyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from specialty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from specialty
+    where SpecialtyID = #{specialtyID,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from specialty
+    where SpecialtyID = #{specialtyID,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.springmvc.po.SpecialtyExample" >
+    delete from specialty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.po.Specialty" >
+    insert into specialty (SpecialtyID, Dept, SpecialtyName
+      )
+    values (#{specialtyID,jdbcType=CHAR}, #{dept,jdbcType=CHAR}, #{specialtyName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.po.Specialty" >
+    insert into specialty
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="specialtyID != null" >
+        SpecialtyID,
+      </if>
+      <if test="dept != null" >
+        Dept,
+      </if>
+      <if test="specialtyName != null" >
+        SpecialtyName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="specialtyID != null" >
+        #{specialtyID,jdbcType=CHAR},
+      </if>
+      <if test="dept != null" >
+        #{dept,jdbcType=CHAR},
+      </if>
+      <if test="specialtyName != null" >
+        #{specialtyName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.springmvc.po.SpecialtyExample" resultType="java.lang.Integer" >
+    select count(*) from specialty
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update specialty
+    <set >
+      <if test="record.specialtyID != null" >
+        SpecialtyID = #{record.specialtyID,jdbcType=CHAR},
+      </if>
+      <if test="record.dept != null" >
+        Dept = #{record.dept,jdbcType=CHAR},
+      </if>
+      <if test="record.specialtyName != null" >
+        SpecialtyName = #{record.specialtyName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update specialty
+    set SpecialtyID = #{record.specialtyID,jdbcType=CHAR},
+      Dept = #{record.dept,jdbcType=CHAR},
+      SpecialtyName = #{record.specialtyName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.po.Specialty" >
+    update specialty
+    <set >
+      <if test="dept != null" >
+        Dept = #{dept,jdbcType=CHAR},
+      </if>
+      <if test="specialtyName != null" >
+        SpecialtyName = #{specialtyName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SpecialtyID = #{specialtyID,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.po.Specialty" >
+    update specialty
+    set Dept = #{dept,jdbcType=CHAR},
+      SpecialtyName = #{specialtyName,jdbcType=VARCHAR}
+    where SpecialtyID = #{specialtyID,jdbcType=CHAR}
+  </update>
+  <select id="getSpecialtyName" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+    SpecialtyName
+    from specialty
+    where SpecialtyID = #{specialtyID,jdbcType=CHAR}
+  </select>
+</mapper>

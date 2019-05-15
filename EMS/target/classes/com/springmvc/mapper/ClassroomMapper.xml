@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.mapper.ClassroomMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.po.Classroom" >
+    <id column="ClassroomID" property="classroomID" jdbcType="VARCHAR" />
+    <result column="ClassroomName" property="classroomName" jdbcType="VARCHAR" />
+    <result column="Type" property="type" jdbcType="VARCHAR" />
+    <result column="Size" property="size" jdbcType="INTEGER" />
+    <result column="Equipment" property="equipment" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ClassroomID, ClassroomName, Type, Size, Equipment
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.springmvc.po.ClassroomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from classroom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from classroom
+    where ClassroomID = #{classroomID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from classroom
+    where ClassroomID = #{classroomID,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.springmvc.po.ClassroomExample" >
+    delete from classroom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.po.Classroom" >
+    insert into classroom (ClassroomID, ClassroomName, Type, 
+      Size, Equipment)
+    values (#{classroomID,jdbcType=VARCHAR}, #{classroomName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{size,jdbcType=INTEGER}, #{equipment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.po.Classroom" >
+    insert into classroom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classroomID != null" >
+        ClassroomID,
+      </if>
+      <if test="classroomName != null" >
+        ClassroomName,
+      </if>
+      <if test="type != null" >
+        Type,
+      </if>
+      <if test="size != null" >
+        Size,
+      </if>
+      <if test="equipment != null" >
+        Equipment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classroomID != null" >
+        #{classroomID,jdbcType=VARCHAR},
+      </if>
+      <if test="classroomName != null" >
+        #{classroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="equipment != null" >
+        #{equipment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.springmvc.po.ClassroomExample" resultType="java.lang.Integer" >
+    select count(*) from classroom
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update classroom
+    <set >
+      <if test="record.classroomID != null" >
+        ClassroomID = #{record.classroomID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classroomName != null" >
+        ClassroomName = #{record.classroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        Type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.size != null" >
+        Size = #{record.size,jdbcType=INTEGER},
+      </if>
+      <if test="record.equipment != null" >
+        Equipment = #{record.equipment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update classroom
+    set ClassroomID = #{record.classroomID,jdbcType=VARCHAR},
+      ClassroomName = #{record.classroomName,jdbcType=VARCHAR},
+      Type = #{record.type,jdbcType=VARCHAR},
+      Size = #{record.size,jdbcType=INTEGER},
+      Equipment = #{record.equipment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.po.Classroom" >
+    update classroom
+    <set >
+      <if test="classroomName != null" >
+        ClassroomName = #{classroomName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        Type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        Size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="equipment != null" >
+        Equipment = #{equipment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ClassroomID = #{classroomID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.po.Classroom" >
+    update classroom
+    set ClassroomName = #{classroomName,jdbcType=VARCHAR},
+      Type = #{type,jdbcType=VARCHAR},
+      Size = #{size,jdbcType=INTEGER},
+      Equipment = #{equipment,jdbcType=VARCHAR}
+    where ClassroomID = #{classroomID,jdbcType=VARCHAR}
+  </update>
+  <select id="getClassroomNameByPrimaryKey" resultType="java.lang.String" parameterType="java.lang.String" >
+    select
+    ClassroomName
+    from classroom
+    where ClassroomID = #{classroomID,jdbcType=VARCHAR}
+  </select>
+</mapper>

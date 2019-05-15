@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.mapper.AdminDeptMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.po.AdminDept" >
+    <id column="AdminID" property="adminID" jdbcType="VARCHAR" />
+    <result column="AdminName" property="adminName" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="CHAR" />
+    <result column="Dept" property="dept" jdbcType="CHAR" />
+    <result column="AccountNumber" property="accountNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AdminID, AdminName, Phone, Dept, AccountNumber
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.springmvc.po.AdminDeptExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from admin_dept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_dept
+    where AdminID = #{adminID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from admin_dept
+    where AdminID = #{adminID,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.springmvc.po.AdminDeptExample" >
+    delete from admin_dept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.po.AdminDept" >
+    insert into admin_dept (AdminID, AdminName, Phone, 
+      Dept, AccountNumber)
+    values (#{adminID,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR}, #{phone,jdbcType=CHAR}, 
+      #{dept,jdbcType=CHAR}, #{accountNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.po.AdminDept" >
+    insert into admin_dept
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adminID != null" >
+        AdminID,
+      </if>
+      <if test="adminName != null" >
+        AdminName,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="dept != null" >
+        Dept,
+      </if>
+      <if test="accountNumber != null" >
+        AccountNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adminID != null" >
+        #{adminID,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null" >
+        #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="dept != null" >
+        #{dept,jdbcType=CHAR},
+      </if>
+      <if test="accountNumber != null" >
+        #{accountNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.springmvc.po.AdminDeptExample" resultType="java.lang.Integer" >
+    select count(*) from admin_dept
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update admin_dept
+    <set >
+      <if test="record.adminID != null" >
+        AdminID = #{record.adminID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminName != null" >
+        AdminName = #{record.adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        Phone = #{record.phone,jdbcType=CHAR},
+      </if>
+      <if test="record.dept != null" >
+        Dept = #{record.dept,jdbcType=CHAR},
+      </if>
+      <if test="record.accountNumber != null" >
+        AccountNumber = #{record.accountNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update admin_dept
+    set AdminID = #{record.adminID,jdbcType=VARCHAR},
+      AdminName = #{record.adminName,jdbcType=VARCHAR},
+      Phone = #{record.phone,jdbcType=CHAR},
+      Dept = #{record.dept,jdbcType=CHAR},
+      AccountNumber = #{record.accountNumber,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.po.AdminDept" >
+    update admin_dept
+    <set >
+      <if test="adminName != null" >
+        AdminName = #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="dept != null" >
+        Dept = #{dept,jdbcType=CHAR},
+      </if>
+      <if test="accountNumber != null" >
+        AccountNumber = #{accountNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AdminID = #{adminID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.po.AdminDept" >
+    update admin_dept
+    set AdminName = #{adminName,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=CHAR},
+      Dept = #{dept,jdbcType=CHAR},
+      AccountNumber = #{accountNumber,jdbcType=VARCHAR}
+    where AdminID = #{adminID,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByAccountNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from admin_dept
+    where AccountNumber = #{accountNumber,jdbcType=VARCHAR}
+  </select>
+</mapper>

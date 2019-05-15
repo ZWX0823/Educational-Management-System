@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmvc.mapper.ClassMapper" >
+  <resultMap id="BaseResultMap" type="com.springmvc.po.Class" >
+    <id column="ClassID" property="classID" jdbcType="CHAR" />
+    <result column="ClassName" property="className" jdbcType="VARCHAR" />
+    <result column="Specialty" property="specialty" jdbcType="CHAR" />
+    <result column="Number" property="number" jdbcType="INTEGER" />
+    <result column="AdmissionDate" property="admissionDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ClassID, ClassName, Specialty, Number, AdmissionDate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.springmvc.po.ClassExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from class
+    where ClassID = #{classID,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from class
+    where ClassID = #{classID,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.springmvc.po.ClassExample" >
+    delete from class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.springmvc.po.Class" >
+    insert into class (ClassID, ClassName, Specialty, 
+      Number, AdmissionDate)
+    values (#{classID,jdbcType=CHAR}, #{className,jdbcType=VARCHAR}, #{specialty,jdbcType=CHAR}, 
+      #{number,jdbcType=INTEGER}, #{admissionDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springmvc.po.Class" >
+    insert into class
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classID != null" >
+        ClassID,
+      </if>
+      <if test="className != null" >
+        ClassName,
+      </if>
+      <if test="specialty != null" >
+        Specialty,
+      </if>
+      <if test="number != null" >
+        Number,
+      </if>
+      <if test="admissionDate != null" >
+        AdmissionDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classID != null" >
+        #{classID,jdbcType=CHAR},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="admissionDate != null" >
+        #{admissionDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.springmvc.po.ClassExample" resultType="java.lang.Integer" >
+    select count(*) from class
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update class
+    <set >
+      <if test="record.classID != null" >
+        ClassID = #{record.classID,jdbcType=CHAR},
+      </if>
+      <if test="record.className != null" >
+        ClassName = #{record.className,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialty != null" >
+        Specialty = #{record.specialty,jdbcType=CHAR},
+      </if>
+      <if test="record.number != null" >
+        Number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.admissionDate != null" >
+        AdmissionDate = #{record.admissionDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update class
+    set ClassID = #{record.classID,jdbcType=CHAR},
+      ClassName = #{record.className,jdbcType=VARCHAR},
+      Specialty = #{record.specialty,jdbcType=CHAR},
+      Number = #{record.number,jdbcType=INTEGER},
+      AdmissionDate = #{record.admissionDate,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springmvc.po.Class" >
+    update class
+    <set >
+      <if test="className != null" >
+        ClassName = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="specialty != null" >
+        Specialty = #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="number != null" >
+        Number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="admissionDate != null" >
+        AdmissionDate = #{admissionDate,jdbcType=DATE},
+      </if>
+    </set>
+    where ClassID = #{classID,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springmvc.po.Class" >
+    update class
+    set ClassName = #{className,jdbcType=VARCHAR},
+      Specialty = #{specialty,jdbcType=CHAR},
+      Number = #{number,jdbcType=INTEGER},
+      AdmissionDate = #{admissionDate,jdbcType=DATE}
+    where ClassID = #{classID,jdbcType=CHAR}
+  </update>
+  <select id="getClassName" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+    ClassName
+    from class
+    where ClassID = #{classID,jdbcType=CHAR}
+  </select>
+</mapper>
